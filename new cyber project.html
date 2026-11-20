@@ -1,0 +1,128 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Password Authenticator</title>
+
+    <style>
+        body {
+            background-color: #e6f0ff;
+            font-family: Arial;
+            text-align: center;
+            margin-top: 70px;
+        }
+
+        .box {
+            background-color: white;
+            width: 350px;
+            margin: auto;
+            padding: 25px;
+            border: 2px solid #4a90e2;
+            border-radius: 15px;
+        }
+
+        h1 {
+            color: #1d4e89;
+        }
+
+        input {
+            padding: 10px;
+            width: 85%;
+            margin: 10px;
+            border: 1px solid gray;
+            border-radius: 5px;
+        }
+
+        button {
+            background-color: #2878c7;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #164e85;
+        }
+
+        #captcha {
+            background-color: #d9eaff;
+            color: #173b68;
+            font-size: 25px;
+            font-weight: bold;
+            letter-spacing: 5px;
+            padding: 10px;
+            margin: 15px;
+            border: 1px dashed #2878c7;
+        }
+
+        #result {
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="box">
+
+        <h1>Password Authenticator</h1>
+
+        <p>Enter your password to verify your identity</p>
+
+        <input type="password" id="pass" placeholder="Enter password">
+
+        <h3>CAPTCHA Verification</h3>
+
+        <p id="captcha"></p>
+
+        <input type="text" id="captchaInput" placeholder="Enter CAPTCHA">
+
+        <br><br>
+
+        <button onclick="verify()">Authenticate</button>
+
+        <p id="result"></p>
+
+    </div>
+
+    <script>
+        var captchaCode;
+
+        function generateCaptcha()
+        {
+            captchaCode = Math.floor(1000 + Math.random() * 9000);
+            document.getElementById("captcha").innerHTML = captchaCode;
+        }
+
+        function verify()
+        {
+            var p = document.getElementById("pass").value;
+            var c = document.getElementById("captchaInput").value;
+
+            if(c != captchaCode)
+            {
+                document.getElementById("result").innerHTML = "Wrong CAPTCHA!";
+                document.getElementById("result").style.color = "red";
+            }
+            else if(p == "12345")
+            {
+                document.getElementById("result").innerHTML = "Access Granted!";
+                document.getElementById("result").style.color = "green";
+            }
+            else
+            {
+                document.getElementById("result").innerHTML = "Access Denied! Wrong Password";
+                document.getElementById("result").style.color = "red";
+            }
+
+            generateCaptcha();
+            document.getElementById("captchaInput").value = "";
+        }
+
+        generateCaptcha();
+    </script>
+
+</body>
+</html>
